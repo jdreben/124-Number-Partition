@@ -20,13 +20,14 @@ def residue(S, A):
 	sigma = 0
 	for p, a in zip(S, A):
 		sigma += p * a
-	return sigma
+	return abs(sigma)
 
 from random import choice # choosing between -1 and 1
 best_sequence = [choice([-1, 1]) for _ in range(0,len(our_list))]
 best_residue = residue(best_sequence, our_list)
 for i in range(max_iterations, 0, -1):
 	random_assignment = [choice([-1, 1]) for _ in range(0,len(our_list))]
+	# check if better than the best
 	this_residue = residue(random_assignment, our_list)
 	if this_residue < best_residue:
 		best_sequence = random_assignment
