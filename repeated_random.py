@@ -34,6 +34,7 @@ for i in range(max_iterations, 0, -1):
 		best_residue = this_residue
 # returns the best sequence
 print best_sequence
+print best_residue
 
 
 
