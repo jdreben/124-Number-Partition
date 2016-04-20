@@ -27,6 +27,7 @@ for i in range(len(list)):
 	else:
 		x = heapq.heappop(list)
 		y = heapq.heappop(list)
-		heapq.heappush(list, x + y)
+		heapq.heappush(list, x - y)
+		print list
 
 print -(heapq.heappop(list))
