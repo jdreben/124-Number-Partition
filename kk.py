@@ -29,4 +29,4 @@ for i in range(len(list)):
 		y = heapq.heappop(list)
 		heapq.heappush(list, x + y)
 
-print heapq.heappop(list)
+print -(heapq.heappop(list))
