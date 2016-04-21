@@ -6,15 +6,26 @@
 from kk import run as kk
 from simulated_annealing import simAnneal as simulated_annealing
 from repeated_random import run as repeated_random
+from random import randint
 
 iterations = 25000
 kk_results, sa_results, rr_results  = [], [], []
 for loop in range(0, 50):
+	print "at loop {}".format(str(loop))
 	# generate a new one each iteration
-	input = [randint(0, 10 ** 12) for _ in range(0, 100)]
-	kk_results.append(kk(input))
-	sa_results.append(simulated_annealing(input, iterations))
-	rr_results.append(repeated_random(input, iterations))
+	this_loop_list = [randint(0, 10 ** 12) for _ in range(0, 100)]
+	# print "loop is {}, this_loop_list is {}".format(str(loop), str(this_loop_list))
+	kk_result = kk(this_loop_list[:])
+
+	kk_results.append(kk_result)
+	# print "kk_result " + str(kk_result)
+	# print "sending this_loop_list " + str(this_loop_list) + " to anneal"
+	sa_result = simulated_annealing(this_loop_list, iterations)
+	sa_results.append(sa_result)
+	# print "sa_result " + str(sa_result)
+	rr_result = repeated_random(this_loop_list, iterations)
+	rr_results.append(rr_result)
+	# print "rr_result " + str(rr_result)
 
 import matplotlib.pyplot as plt
 

@@ -18,6 +18,7 @@ def T(iter):
 	return (10 ** 10) * (0.8 ** floor(iter / 300.0))
 
 def simAnneal(our_list, max_iterations):
+	# print "got to simAnneal " + str(our_list)
 	S = [choice([-1, 1]) for _ in range(0,len(our_list))]
 	S_residue = residue(S, our_list)
 

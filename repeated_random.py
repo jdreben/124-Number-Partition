@@ -3,21 +3,13 @@
 ## Usage: ./repeated_random.py path_to_input_file max_iterations
 ## returns random sequence for input_file with smallest residue after max_iterations
 
-def run(input_file, max_iterations):
-	# most memory conservative way to read it in 
-	# but shouldn't be an issue because 100 or less
-	our_list = []
-	with open(input_file) as FileObj:
-	    for line in FileObj:
-	       our_list.append(int(line)) # cast to int
-	# end boilerplate, begin repeated_random
+def residue(S, A):
+	sigma = 0
+	for p, a in zip(S, A):
+		sigma += p * a
+	return abs(sigma)
 
-	def residue(S, A):
-		sigma = 0
-		for p, a in zip(S, A):
-			sigma += p * a
-		return abs(sigma)
-
+def run(our_list, max_iterations):
 	from random import choice # choosing between -1 and 1
 	best_sequence = [choice([-1, 1]) for _ in range(0,len(our_list))]
 	best_residue = residue(best_sequence, our_list)
@@ -38,7 +30,16 @@ if len(sys.argv) != 3:
 	sys.exit(0)
 	"""
 else:
-	print run(sys.argv[1], int(sys.argv[2]))
+	# most memory conservative way to read it in 
+	# but shouldn't be an issue because 100 or less
+	input_file = sys.argv[1]
+	our_list = []
+	with open(input_file) as FileObj:
+	    for line in FileObj:
+	       our_list.append(int(line)) # cast to int
+	# end boilerplate, begin repeated_random
+
+	print run(our_list, int(sys.argv[2]))
 
 
 
