@@ -5,36 +5,46 @@
 import sys # to read in inputfile
 import heapq
 
-def run(list):
+def runPP(list, P):
 	# most memory conservative way to read it in 
 	# but shouldn't be an issue because 100 or less
 	
 	# end boilerplate, begin KK
 
-	heapq.heapify(list)
+	APrime = makeAPrime(list, P)
+	heapq.heapify(APrime)
 
-	for i in range(len(list)):
-		if len(list) == 1:
+	for i in range(len(APrime)):
+		if len(APrime) == 1:
 			break
 		else:
-			x = heapq.heappop(list)
-			y = heapq.heappop(list)
-			heapq.heappush(list, x - y)
+			x = heapq.heappop(APrime)
+			y = heapq.heappop(APrime)
+			heapq.heappush(APrime, x - y)
 
-	return -(heapq.heappop(list))
+	return -(heapq.heappop(APrime))
 
-def newRun(list, P):
+def makeP(input):
+	P = []
+	list_size = input # int(sys.argv[1])
+	from random import randint # max int ~ 10^18
+	for i in range(list_size):
+		P.append(randint(0, list_size))
+	return P
+
+def makeAPrime(list, P):
+	newList = list
 	size = len(P)
 	for i in range(size):
 		for j in range(size - i):
-			if P(i) == P(j):
-				if list(i) >= list(j):
-					list(i) = list(i) + list(j)
-					list(j) = 0
+			if P[i] == P[j]:
+				if newList[i] >= newList[j]:
+					newList[i] = newList[i] + newList[j]
+					newList[j] = 0
 				else:
-					list(j) = list(i) + list(j)
-					list(i) = 0
-	
+					newList[j] = newList[i] + newList[j]
+					newList[i] = 0
+	return newList
 
 if len(sys.argv) != 2:
 	'''
@@ -45,8 +55,11 @@ else:
 	# run normally
 	input_file = sys.argv[1]
 	list = []
+	list_size = 0
 	with open(input_file) as FileObj:
 	    for line in FileObj:
 	       list.append(-int(line)) # cast to int
-	print run(list)
+	       list_size += 1
+	P = makeP(list_size)
+	print runPP(list, P)
 
