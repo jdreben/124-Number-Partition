@@ -5,11 +5,10 @@
 import sys # to read in inputfile
 import heapq
 
-if len(sys.argv) != 3:
-	print "Usage: ./repeated_random.py path_to_input_file max_iterations"
+if len(sys.argv) != 2:
+	print "Usage: ./repeated_random.py path_to_input_file"
 	sys.exit(0)
 input_file = sys.argv[1]
-max_iterations = int(sys.argv[2])
 # most memory conservative way to read it in 
 # but shouldn't be an issue because 100 or less
 list = []
@@ -19,7 +18,6 @@ with open(input_file) as FileObj:
 # end boilerplate, begin KK
 
 heapq.heapify(list)
-print list
 
 for i in range(len(list)):
 	if len(list) == 1:
@@ -28,6 +26,5 @@ for i in range(len(list)):
 		x = heapq.heappop(list)
 		y = heapq.heappop(list)
 		heapq.heappush(list, x - y)
-		print list
 
 print -(heapq.heappop(list))
