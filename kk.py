@@ -23,6 +23,19 @@ def run(list):
 
 	return -(heapq.heappop(list))
 
+def newRun(list, P):
+	size = len(P)
+	for i in range(size):
+		for j in range(size - i):
+			if P(i) == P(j):
+				if list(i) >= list(j):
+					list(i) = list(i) + list(j)
+					list(j) = 0
+				else:
+					list(j) = list(i) + list(j)
+					list(i) = 0
+	
+
 if len(sys.argv) != 2:
 	'''
 	print "Usage: ./repeated_random.py path_to_input_file"
