@@ -5,23 +5,24 @@
 import sys # to read in inputfile
 import heapq
 
-def run(list):
+def run(l):
+	# expects minheap
+	l = [-1 * i for i in l]
 	# most memory conservative way to read it in 
 	# but shouldn't be an issue because 100 or less
-	
 	# end boilerplate, begin KK
 
-	heapq.heapify(list)
+	heapq.heapify(l)
 
-	for i in range(len(list)):
-		if len(list) == 1:
+	for i in range(len(l)):
+		if len(l) == 1:
 			break
 		else:
-			x = heapq.heappop(list)
-			y = heapq.heappop(list)
-			heapq.heappush(list, x - y)
+			x = heapq.heappop(l)
+			y = heapq.heappop(l)
+			heapq.heappush(l, x - y)
 
-	return -(heapq.heappop(list))
+	return -(heapq.heappop(l))
 
 if len(sys.argv) != 2:
 	'''
@@ -31,9 +32,9 @@ if len(sys.argv) != 2:
 else:
 	# run normally
 	input_file = sys.argv[1]
-	list = []
+	l = []
 	with open(input_file) as FileObj:
 	    for line in FileObj:
-	       list.append(-int(line)) # cast to int
-	print run(list)
+	       l.append(-int(line)) # cast to int
+	print run(l)
 
