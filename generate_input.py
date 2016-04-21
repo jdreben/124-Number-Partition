@@ -3,10 +3,10 @@
 import sys # to read in number of elements
 
 # accessible via import
-def run(input, verbose=False):
+def run(input, title, verbose=False):
 	list_size = input # int(sys.argv[1])
 	from random import randint # max int ~ 10^18
-	file_name = 'input_file' + str(input)
+	file_name = 'input_file' + title
 	f = open(file_name, 'w')
 	for _ in range(0, list_size):
 		f.write(str(randint(0, 10 ** 12))+"\n")
@@ -22,6 +22,6 @@ if len(sys.argv) != 2:
 	'''
 else:
 	# run it normally in verbose mode
-	run(int(sys.argv[1]), True)
+	run(int(sys.argv[1]), sys.argv[1], True)
 
 
