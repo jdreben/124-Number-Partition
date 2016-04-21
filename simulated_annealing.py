@@ -12,7 +12,7 @@ def residue(S, A):
 	sigma = 0
 	for p, a in zip(S, A):
 		sigma += p * a
-	return sigma
+	return abs(sigma)
 
 def T(iter):
 	return (10 ** 10) * (0.8 ** floor(iter / 300.0))
