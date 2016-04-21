@@ -8,19 +8,6 @@ from math import exp, floor, e
 from random import choice, random, randint
 from decimal import Decimal, getcontext; getcontext().prec = 100
 
-if len(sys.argv) != 3:
-	print("Usage: ./simulated_annealing.py path_to_input_file max_iterations")
-	sys.exit(0)
-input_file = sys.argv[1]
-max_iterations = int(sys.argv[2])
-# most memory conservative way to read it in 
-# but shouldn't be an issue because 100 or less
-our_list = []
-with open(input_file) as FileObj:
-    for line in FileObj:
-       our_list.append(int(line)) # cast to int
-# end boilerplate, begin repeated_random
-
 def residue(S, A):
 	sigma = 0
 	for p, a in zip(S, A):
@@ -31,7 +18,6 @@ def T(iter):
 	return (10 ** 10) * (0.8 ** floor(iter / 300.0))
 
 def simAnneal(our_list, max_iterations):
-
 	S = [choice([-1, 1]) for _ in range(0,len(our_list))]
 	S_residue = residue(S, our_list)
 
@@ -66,4 +52,25 @@ def simAnneal(our_list, max_iterations):
 					S_double_prime_residue = residue(S, our_list)
 
 	# returns the best sequence
-	return S_double_prime
+	return S_double_prime_residue
+
+
+
+if len(sys.argv) != 3:
+	'''
+	print("Usage: ./simulated_annealing.py path_to_input_file max_iterations")
+	sys.exit(0)
+	'''
+else:
+
+	input_file = sys.argv[1]
+	max_iterations = int(sys.argv[2])
+	# most memory conservative way to read it in 
+	# but shouldn't be an issue because 100 or less
+	our_list = []
+	with open(input_file) as FileObj:
+	    for line in FileObj:
+	       our_list.append(int(line)) # cast to int
+	# end boilerplate, begin repeated_random
+	print simAnneal(our_list, max_iterations)
+
