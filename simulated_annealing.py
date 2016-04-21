@@ -4,7 +4,7 @@
 ## returns simulated annealing for input_file with smallest residue after max_iterations
 import sys # to read in inputfile
 if len(sys.argv) != 3:
-	print "Usage: ./simulated_annealing.py path_to_input_file max_iterations"
+	print("Usage: ./simulated_annealing.py path_to_input_file max_iterations")
 	sys.exit(0)
 input_file = sys.argv[1]
 max_iterations = int(sys.argv[2])
@@ -23,7 +23,7 @@ def residue(S, A):
 	return sigma
 
 def T(iter):
-	return (10 ** 10) * (0.8 ** floor(iter / 300.0))
+	return 1 # return (10 ** 10) * (0.8 ** floor(iter / 300.0))
 
 from math import exp, floor, e
 from random import choice, random, randint
@@ -56,16 +56,11 @@ for iter in range(1, max_iterations):
 		S_residue = S_prime_residue
 	# here lies the difference from hill climbing
 	else:
-		print "exp looks like"
-		print "residue(S_prime, our_list) " + str(residue(S_prime, our_list))
-		print "residue(S, our_list) " + str(residue(S, our_list))
-		print "T(float(iter)) " + str(T(float(iter)))
-		pigs_fly = Decimal(e) ** Decimal(-1 * residue(S_prime, our_list) - residue(S, our_list) / T(float(iter)))
-		print pigs_fly
+		pigs_fly = exp(-1 * (residue(S_prime, our_list) - residue(S, our_list)) / T(iter))
 		if random() < pigs_fly:
 			if residue(S, our_list) < residue(S_double_prime, our_list):
 				S_double_prime = S
 				S_double_prime_residue = residue(S, our_list)
 
 # returns the best sequence
-print S_double_prime
+print(S_double_prime)
