@@ -8,10 +8,6 @@ import heapq
 def run(l):
 	# expects minheap
 	l = [-1 * i for i in l]
-	# most memory conservative way to read it in 
-	# but shouldn't be an issue because 100 or less
-	# end boilerplate, begin KK
-
 	heapq.heapify(l)
 
 	for i in range(len(l)):
@@ -24,6 +20,43 @@ def run(l):
 
 	return -(heapq.heappop(l))
 
+def runPP(list, P):
+	APrime = makeAPrime(list, P)
+	heapq.heapify(APrime)
+
+	for i in range(len(APrime)):
+		if len(APrime) == 1:
+			break
+		else:
+			x = heapq.heappop(APrime)
+			y = heapq.heappop(APrime)
+			heapq.heappush(APrime, x - y)
+
+	return -(heapq.heappop(APrime))
+
+def makeP(input):
+	P = []
+	list_size = input # int(sys.argv[1])
+	from random import randint # max int ~ 10^18
+	for i in range(list_size):
+		P.append(randint(0, list_size))
+	return P
+
+def makeAPrime(list, P):
+	newList = list
+	size = len(P)
+	for i in range(size):
+		for j in range(size - i):
+			if P[i] == P[j]:
+				if newList[i] >= newList[j]:
+					newList[i] = newList[i] + newList[j]
+					newList[j] = 0
+				else:
+					newList[j] = newList[i] + newList[j]
+					newList[i] = 0
+	return newList
+
+
 if len(sys.argv) != 2:
 	'''
 	print "Usage: ./repeated_random.py path_to_input_file"
@@ -32,9 +65,12 @@ if len(sys.argv) != 2:
 else:
 	# run normally
 	input_file = sys.argv[1]
-	l = []
+	list = []
+	list_size = 0
 	with open(input_file) as FileObj:
 	    for line in FileObj:
-	       l.append(-int(line)) # cast to int
-	print run(l)
+	       list.append(-int(line)) # cast to int
+	       list_size += 1
+	P = makeP(list_size)
+	print runPP(list, P)
 
