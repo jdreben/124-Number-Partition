@@ -9,7 +9,6 @@ def run(l):
 		# expects minheap
 		heapq.heapify(l)
 		for i in range(len(l)):
-			print l
 			if len(l) == 1 or len(l) == 0:
 				break
 			else:
@@ -71,5 +70,5 @@ else:
 	       list.append(-int(line)) # cast to int
 	       list_size += 1
 	P = makeP(list_size)
-	print run(list)
+	print "KK result " + str(run(list))
 

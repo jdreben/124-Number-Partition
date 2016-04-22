@@ -42,7 +42,6 @@ def runPP(our_list, max_iterations):
 	for n in range(max_iterations):
 		P = prepartition(our_list)
 		list = our_list[:]
-		# print P
 
 		for p in range(list_size):
 			for q in range(list_size - p):
@@ -50,7 +49,6 @@ def runPP(our_list, max_iterations):
 					list.append(list[p] + list[q])
 					del list[p]
 					del list[q]
-					# print len(list)
 
 		new_residue = runKK(list)
 		residue = min(residue, new_residue)
@@ -74,7 +72,7 @@ else:
 	# end boilerplate, begin repeated_random
 
 	#print run(our_list, int(sys.argv[2]))
-	print runPP(our_list, max_iterations)
+	print "Repeated Random Result " + str(runPP(our_list, max_iterations))
 
 
 
