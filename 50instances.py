@@ -15,7 +15,7 @@ from hill_climbing import runPP as hill_climbingPP
 from repeated_random import run as repeated_random
 from repeated_random import runPP as repeated_randomPP
 
-iterations = 25000
+iterations = 250
 kk_results, sa_results, rr_results, hc_results  = [], [], [], []
 sa_resultsPP, rr_resultsPP, hc_resultsPP  = [], [], []
 for loop in range(0, 50):
@@ -75,6 +75,7 @@ plt.title("1st representation")
 plt.xlabel("instance")
 plt.ylabel("residue")
 plt.savefig("normal-1st.png")
+plt.clf()
 # plt.show()
 
 plt.semilogy(kk_results, color='blue', label='KK')
@@ -90,6 +91,7 @@ plt.title("1st representation")
 plt.xlabel("instance")
 plt.ylabel("log residue")
 plt.savefig('log-1st.png')
+plt.clf()
 # plt.show()
 
 # 2nd representation
@@ -105,6 +107,7 @@ plt.title("2nd representation")
 plt.xlabel("instance")
 plt.ylabel("residue")
 plt.savefig('normal-2nd.png')
+plt.clf()
 # plt.show()
 
 plt.semilogy(kk_results, color='blue', label='KK')
@@ -120,4 +123,5 @@ plt.xlabel("instance")
 plt.ylabel("log residue")
 
 plt.savefig('log-2nd.png')
+plt.clf()
 # plt.show()

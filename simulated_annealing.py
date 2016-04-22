@@ -6,31 +6,30 @@
 import sys # to read in inputfile
 from math import exp, floor, e
 from random import choice, random, randint
-from decimal import Decimal, getcontext; getcontext().prec = 100
 # from repeated_random import prepartition as prepartition
 import heapq
 
 def prepartition(list_size):
-	from random import randint
 	partition = []
 	for i in range(list_size):
 		partition.append(randint(0, list_size-1))
 	return partition
 
-def runKK(l):
-	# expects minheap
-	l = [-1 * i for i in l]
-	heapq.heapify(l)
+from kk import run as runKK
+# def runKK(l):
+# 	# expects minheap
+# 	l = [-1 * i for i in l]
+# 	heapq.heapify(l)
 
-	for i in range(len(l)):
-		if len(l) == 1 or len(l) == 0:
-			break
-		else:
-			x = heapq.heappop(l)
-			y = heapq.heappop(l)
-			heapq.heappush(l, x - y)
+# 	for i in range(len(l)):
+# 		if len(l) == 1 or len(l) == 0:
+# 			break
+# 		else:
+# 			x = heapq.heappop(l)
+# 			y = heapq.heappop(l)
+# 			heapq.heappush(l, x - y)
 
-	return -(heapq.heappop(l))
+# 	return -(heapq.heappop(l))
 
 def residue(S, A):
 	sigma = 0
@@ -81,7 +80,6 @@ def simAnneal(our_list, max_iterations):
 	return S_double_prime_residue
 
 def getNeighbor(P):
-	from random import choice
 	length = len(P)
 	i = choice(range(0, length)); j = P[i]
 	while P[i] == j:
@@ -128,19 +126,19 @@ def getPartition(P, our_list):
 def simAnnealPP(our_list, max_iterations):
 	list_size = len(our_list)
 	S = prepartition(list_size)
+	residue_S = runKK(getPartition(S, our_list))
 	S_double_prime = S[:]
+	S_double_prime_residue = residue_S
 
 	for n in range(max_iterations):
 		S_prime = getNeighbor(S)
-		residue_S = runKK(getPartition(S, our_list))
 		residue_S_prime = runKK(getPartition(S_prime, our_list))
-		S_double_prime_residue = residue_S
-
+		
 		if residue_S > residue_S_prime:
 			S = S_prime[:]
 			residue_S = residue_S_prime
 		else:
-			pigs_fly = exp(-1 * (residue_S_prime - residue_S) / T(n))
+			pigs_fly = exp(-1 * (residue_S_prime - residue_S) / T(float(n)))
 			if random() < pigs_fly:
 				S = S_prime[:]
 		if residue_S < S_double_prime_residue:
