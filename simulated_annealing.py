@@ -95,7 +95,7 @@ def getPartition(P, our_list):
 	list_size = len(list)
 
 	for p in range(list_size):
-		for q in range(list_size):
+		for q in range(list_size - p):
 			if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
 				list.append(list[p] + list[q])
 				del list[p]

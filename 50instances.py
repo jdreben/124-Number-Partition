@@ -15,7 +15,7 @@ from hill_climbing import runPP as hill_climbingPP
 from repeated_random import run as repeated_random
 from repeated_random import runPP as repeated_randomPP
 
-iterations = 25000
+iterations = 250
 kk_results, sa_results, rr_results, hc_results  = [], [], [], []
 sa_resultsPP, rr_resultsPP, hc_resultsPP  = [], [], []
 for loop in range(0, 50):
@@ -108,9 +108,9 @@ plt.ylabel("residue")
 plt.show()
 
 plt.semilogy(kk_results, color='blue', label='KK')
-plt.semilogy(sa_resultsRR, color='red', label='SA')
-plt.semilogy(rr_resultsRR, color='green', label='RR')
-plt.semilogy(hc_resultsRR, color='pink', label='HC')
+plt.semilogy(sa_resultsPP, color='red', label='SA')
+plt.semilogy(rr_resultsPP, color='green', label='RR')
+plt.semilogy(hc_resultsPP, color='pink', label='HC')
 
 legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 # Put a nicer background color on the legend.
