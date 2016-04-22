@@ -7,6 +7,7 @@ import heapq
 
 def run(l):
 		# expects minheap
+		l = [-1 * i for i in l]
 		heapq.heapify(l)
 		for i in range(len(l)):
 			if len(l) == 1 or len(l) == 0:
@@ -67,7 +68,7 @@ else:
 	list_size = 0
 	with open(input_file) as FileObj:
 	    for line in FileObj:
-	       list.append(-int(line)) # cast to int
+	       list.append(int(line)) # cast to int
 	       list_size += 1
 	P = makeP(list_size)
 	print "KK result " + str(run(list))
