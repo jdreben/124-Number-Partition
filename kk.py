@@ -6,19 +6,19 @@ import sys # to read in inputfile
 import heapq
 
 def run(l):
-	# expects minheap
-	l = [-1 * i for i in l]
-	heapq.heapify(l)
+		# expects minheap
+		l = [-1 * i for i in l]
+		heapq.heapify(l)
 
-	for i in range(len(l)):
-		if len(l) == 1:
-			break
-		else:
-			x = heapq.heappop(l)
-			y = heapq.heappop(l)
-			heapq.heappush(l, x - y)
+		for i in range(len(l)):
+			if len(l) == 1 or len(l) == 0:
+				break
+			else:
+				x = heapq.heappop(l)
+				y = heapq.heappop(l)
+				heapq.heappush(l, x - y)
 
-	return -(heapq.heappop(l))
+		return -(heapq.heappop(l))
 
 def runPP(list, P):
 	APrime = makeAPrime(list, P)

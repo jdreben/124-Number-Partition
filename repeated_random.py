@@ -4,6 +4,7 @@
 ## returns random sequence for input_file with smallest residue after max_iterations
 
 from kk import run as runKK
+import sys
 
 def residue(S, A):
 	sigma = 0
@@ -35,22 +36,27 @@ def prepartition(our_list):
 
 def runPP(our_list, max_iterations):
 	from random import randint
-	P = prepartition(our_list)
 	list_size = len(our_list)
-	for n in range(max_iterations):
-		i = randint(1, list_size)
-		j = randint(1, list_size)
-		while P[i] == j and i > len(P):
-			i = randint(1, list_size)
-		P[i] = j
-	for p in range(list_size):
-		for q in range(list_size):
-			if P[p] == P[q] and p < len(our_list) and q < len(our_list):
-				our_list.append(our_list[p] + our_list[q])
-				del our_list[p], our_list[q]
-	return runKK(our_list)
+	residue = sys.maxint
 
-import sys # to read in inputfile
+	for n in range(max_iterations):
+		P = prepartition(our_list)
+		list = our_list[:]
+		# print P
+
+		for p in range(list_size):
+			for q in range(list_size):
+				if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+					list.append(list[p] + list[q])
+					del list[p]
+					del list[q]
+					# print len(list)
+
+		new_residue = runKK(list)
+		residue = min(residue, new_residue)
+
+	return residue
+
 if len(sys.argv) != 3:
 	"""
 	print "Usage: ./repeated_random.py path_to_input_file max_iterations"
