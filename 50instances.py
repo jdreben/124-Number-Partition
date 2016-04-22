@@ -94,9 +94,9 @@ plt.show()
 
 # 2nd representation
 plt.plot(kk_results, color='blue', label='KK')
-plt.plot(sa_resultsRR, color='red', label='SA')
-plt.plot(rr_resultsRR, color='green', label='RR')
-plt.plot(hc_resultsRR, color='pink', label='HC')
+plt.plot(sa_resultsPP, color='red', label='SA')
+plt.plot(rr_resultsPP, color='green', label='RR')
+plt.plot(hc_resultsPP, color='pink', label='HC')
 
 legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 # Put a nicer background color on the legend.
