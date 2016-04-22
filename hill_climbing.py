@@ -32,6 +32,7 @@ def runPP(our_list, max_iterations):
 	list_size = len(our_list)
 	residue = sys.maxint
 	P = prepartition(our_list)
+	list = our_list[:]
 
 	for i in range(max_iterations, 0, -1):
 		# get new neighbor
