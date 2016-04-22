@@ -3,6 +3,8 @@
 ## Usage: ./repeated_random.py path_to_input_file max_iterations
 ## returns random sequence for input_file with smallest residue after max_iterations
 
+from kk import run as runKK
+
 def residue(S, A):
 	sigma = 0
 	for p, a in zip(S, A):
@@ -23,6 +25,31 @@ def run(our_list, max_iterations):
 	# returns the best sequence
 	return best_residue
 
+def prepartition(our_list):
+	from random import randint
+	list_size = len(our_list)
+	partition = []
+	for i in range(list_size):
+		partition.append(randint(1, list_size))
+	return partition
+
+def runPP(our_list, max_iterations):
+	from random import randint
+	P = prepartition(our_list)
+	list_size = len(our_list)
+	for n in range(max_iterations):
+		i = randint(1, list_size)
+		j = randint(1, list_size)
+		while P[i] == j and i > len(P):
+			i = randint(1, list_size)
+		P[i] = j
+	for p in range(list_size):
+		for q in range(list_size):
+			if P[p] == P[q] and p < len(our_list) and q < len(our_list):
+				our_list.append(our_list[p] + our_list[q])
+				del our_list[p], our_list[q]
+	return runKK(our_list)
+
 import sys # to read in inputfile
 if len(sys.argv) != 3:
 	"""
@@ -33,13 +60,15 @@ else:
 	# most memory conservative way to read it in 
 	# but shouldn't be an issue because 100 or less
 	input_file = sys.argv[1]
+	max_iterations = int(sys.argv[2])
 	our_list = []
 	with open(input_file) as FileObj:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
 
-	print run(our_list, int(sys.argv[2]))
+	#print run(our_list, int(sys.argv[2]))
+	print runPP(our_list, max_iterations)
 
 
 
