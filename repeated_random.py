@@ -41,7 +41,6 @@ def runPP(our_list, max_iterations):
 	for n in range(max_iterations):
 		P = prepartition(list_size)
 		list = our_list[:]
-		# print P
 
 		# new method
 		p = 0
@@ -86,7 +85,7 @@ else:
 	# end boilerplate, begin repeated_random
 
 	#print run(our_list, int(sys.argv[2]))
-	print runPP(our_list, max_iterations)
+	print "Repeated Random Result " + str(runPP(our_list, max_iterations))
 
 
 
