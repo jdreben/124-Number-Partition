@@ -10,9 +10,8 @@ from decimal import Decimal, getcontext; getcontext().prec = 100
 # from repeated_random import prepartition as prepartition
 import heapq
 
-def prepartition(our_list):
+def prepartition(list_size):
 	from random import randint
-	list_size = len(our_list)
 	partition = []
 	for i in range(list_size):
 		partition.append(randint(1, list_size))
@@ -92,20 +91,32 @@ def getNeighbor(P):
 
 def getPartition(P, our_list):
 	list = our_list[:]
-	list_size = len(list)
-
-	for p in range(list_size):
-		for q in range(list_size - p):
-			if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+	# new method
+	p = 0
+	while p < len(list):
+		q = p
+		while q < len(list):
+			if P[p] == P[q]:
 				list.append(list[p] + list[q])
 				del list[p]
 				del list[q]
+			q += 1
+		p += 1
+
+	# old method
+	# for p in range(list_size):
+	# 	for q in range(list_size - p):
+	# 		if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+	# 			list.append(list[p] + list[q])
+	# 			del list[p]
+	# 			del list[q]
 
 	return list
 
 def simAnnealPP(our_list, max_iterations):
-	S = prepartition(our_list)
-	S_double_prime = S
+	list_size = len(our_list)
+	S = prepartition(list_size)
+	S_double_prime = S[:]
 
 	for n in range(max_iterations):
 		S_prime = getNeighbor(S)
@@ -114,14 +125,14 @@ def simAnnealPP(our_list, max_iterations):
 		S_double_prime_residue = residue_S
 
 		if residue_S > residue_S_prime:
-			S = S_prime
+			S = S_prime[:]
 			residue_S = residue_S_prime
 		else:
 			pigs_fly = exp(-1 * (residue_S_prime - residue_S) / T(n))
 			if random() < pigs_fly:
-				S = S_prime
+				S = S_prime[:]
 		if residue_S < S_double_prime_residue:
-			S_double_prime = S
+			S_double_prime = S[:]
 			S_double_prime_residue = residue_S
 
 	return S_double_prime_residue

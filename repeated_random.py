@@ -5,6 +5,7 @@
 
 from kk import run as runKK
 import sys
+from random import randint
 
 def residue(S, A):
 	sigma = 0
@@ -26,30 +27,41 @@ def run(our_list, max_iterations):
 	# returns the best sequence
 	return best_residue
 
-def prepartition(our_list):
-	from random import randint
-	list_size = len(our_list)
+def prepartition(list_size):
+	
 	partition = []
 	for i in range(list_size):
-		partition.append(randint(1, list_size))
+		partition.append(randint(0, list_size))
 	return partition
 
 def runPP(our_list, max_iterations):
-	from random import randint
 	list_size = len(our_list)
 	residue = sys.maxint
 
 	for n in range(max_iterations):
-		P = prepartition(our_list)
+		P = prepartition(list_size)
 		list = our_list[:]
 		# print P
 
-		for p in range(list_size):
-			for q in range(list_size - p):
-				if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+		# new method
+		p = 0
+		while p < len(list):
+			q = p
+			while q < len(list):
+				if P[p] == P[q]:
 					list.append(list[p] + list[q])
 					del list[p]
 					del list[q]
+				q += 1
+			p += 1
+
+		# old method
+		# for p in range(list_size):
+		# 	for q in range(list_size - p):
+		# 		if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+		# 			list.append(list[p] + list[q])
+		# 			del list[p]
+		# 			del list[q]
 					# print len(list)
 
 		new_residue = runKK(list)

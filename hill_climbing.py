@@ -4,22 +4,22 @@
 ## returns hill climbing for input_file with smallest residue after max_iterations
 import sys # to read in inputfile
 from kk import run as runKK
+from random import randint
+from random import choice, random, randint
+
 def residue(S, A):
 	sigma = 0
 	for p, a in zip(S, A):
 		sigma += p * a
 	return abs(sigma)
 
-def prepartition(our_list):
-	from random import randint
-	list_size = len(our_list)
+def prepartition(list_size):
 	partition = []
 	for i in range(list_size):
-		partition.append(randint(1, list_size))
+		partition.append(randint(0, list_size))
 	return partition
 
 def getNeighbor(P):
-	from random import choice
 	length = len(P)
 	i = choice(range(0, length)); j = P[i]
 	while P[i] == j:
@@ -28,10 +28,9 @@ def getNeighbor(P):
 	return P
 
 def runPP(our_list, max_iterations):
-	from random import choice, random, randint
 	list_size = len(our_list)
 	residue = sys.maxint
-	P = prepartition(our_list)
+	P = prepartition(list_size)
 	list = our_list[:]
 
 	for i in range(max_iterations, 0, -1):
@@ -39,12 +38,25 @@ def runPP(our_list, max_iterations):
 		P = getNeighbor(P)
 		list = our_list[:]
 
-		for p in range(list_size):
-			for q in range(list_size):
-				if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+		# new method
+		p = 0
+		while p < len(list):
+			q = p
+			while q < len(list):
+				if P[p] == P[q]:
 					list.append(list[p] + list[q])
 					del list[p]
 					del list[q]
+				q += 1
+			p += 1
+
+		# old method
+		# for p in range(list_size):
+		# 	for q in range(list_size):
+		# 		if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+		# 			list.append(list[p] + list[q])
+		# 			del list[p]
+		# 			del list[q]
 					# print len(list)
 
 		new_residue = runKK(list)

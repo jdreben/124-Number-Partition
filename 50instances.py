@@ -15,7 +15,7 @@ from hill_climbing import runPP as hill_climbingPP
 from repeated_random import run as repeated_random
 from repeated_random import runPP as repeated_randomPP
 
-iterations = 250
+iterations = 25000
 kk_results, sa_results, rr_results, hc_results  = [], [], [], []
 sa_resultsPP, rr_resultsPP, hc_resultsPP  = [], [], []
 for loop in range(0, 50):
@@ -74,8 +74,8 @@ legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 plt.title("1st representation")
 plt.xlabel("instance")
 plt.ylabel("residue")
-
-plt.show()
+plt.savefig("normal-1st.png")
+# plt.show()
 
 plt.semilogy(kk_results, color='blue', label='KK')
 plt.semilogy(sa_results, color='red', label='SA')
@@ -89,8 +89,8 @@ legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 plt.title("1st representation")
 plt.xlabel("instance")
 plt.ylabel("log residue")
-
-plt.show()
+plt.savefig('log-1st.png')
+# plt.show()
 
 # 2nd representation
 plt.plot(kk_results, color='blue', label='KK')
@@ -104,8 +104,8 @@ legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 plt.title("2nd representation")
 plt.xlabel("instance")
 plt.ylabel("residue")
-
-plt.show()
+plt.savefig('normal-2nd.png')
+# plt.show()
 
 plt.semilogy(kk_results, color='blue', label='KK')
 plt.semilogy(sa_resultsPP, color='red', label='SA')
@@ -119,4 +119,5 @@ plt.title("2nd representation")
 plt.xlabel("instance")
 plt.ylabel("log residue")
 
-plt.show()
+plt.savefig('log-2nd.png')
+# plt.show()
