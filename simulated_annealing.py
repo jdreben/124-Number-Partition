@@ -7,7 +7,31 @@ import sys # to read in inputfile
 from math import exp, floor, e
 from random import choice, random, randint
 from decimal import Decimal, getcontext; getcontext().prec = 100
-from kk import run as runKK
+# from repeated_random import prepartition as prepartition
+import heapq
+
+def prepartition(our_list):
+	from random import randint
+	list_size = len(our_list)
+	partition = []
+	for i in range(list_size):
+		partition.append(randint(1, list_size))
+	return partition
+
+def runKK(l):
+	# expects minheap
+	l = [-1 * i for i in l]
+	heapq.heapify(l)
+
+	for i in range(len(l)):
+		if len(l) == 1 or len(l) == 0:
+			break
+		else:
+			x = heapq.heappop(l)
+			y = heapq.heappop(l)
+			heapq.heappush(l, x - y)
+
+	return -(heapq.heappop(l))
 
 def residue(S, A):
 	sigma = 0
@@ -49,24 +73,58 @@ def simAnneal(our_list, max_iterations):
 		else:
 			pigs_fly = exp(-1 * (residue(S_prime, our_list) - residue(S, our_list)) / T(iter))
 			if random() < pigs_fly:
-				if residue(S, our_list) < residue(S_double_prime, our_list):
-					S_double_prime = S
-					S_double_prime_residue = residue(S, our_list)
+				S = S_prime
+		if residue(S, our_list) < residue(S_double_prime, our_list):
+			S_double_prime = S
+			S_double_prime_residue = residue(S, our_list)
 
 	# returns the best sequence
 	return S_double_prime_residue
 
+def getNeighbor(P):
+	from random import choice
+	length = len(P)
+	i = choice(range(0, length)); j = P[i]
+	while P[i] == j:
+		j = choice(range(0, length))
+	P[i] = j
+	return P
+
+def getPartition(P, our_list):
+	list = our_list[:]
+	list_size = len(list)
+
+	for p in range(list_size):
+		for q in range(list_size):
+			if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
+				list.append(list[p] + list[q])
+				del list[p]
+				del list[q]
+
+	return list
+
 def simAnnealPP(our_list, max_iterations):
-	P = partition(our_list)
+	S = prepartition(our_list)
+	S_double_prime = S
 
 	for n in range(max_iterations):
-		P_neighbor = neighbor(P)
-		residue_P = runKK(P)
-		residue_P_neighbor = runKK(P_neighbor)
-		if residue_P < residue_P_neighbor:
-			P = P_neighbor
+		S_prime = getNeighbor(S)
+		residue_S = runKK(getPartition(S, our_list))
+		residue_S_prime = runKK(getPartition(S_prime, our_list))
+		S_double_prime_residue = residue_S
+
+		if residue_S > residue_S_prime:
+			S = S_prime
+			residue_S = residue_S_prime
 		else:
-			#pigs_fly = exp(-1 * (residue(S_prime, our_list) - residue(S, our_list)) / T(iter))
+			pigs_fly = exp(-1 * (residue_S_prime - residue_S) / T(n))
+			if random() < pigs_fly:
+				S = S_prime
+		if residue_S < S_double_prime_residue:
+			S_double_prime = S
+			S_double_prime_residue = residue_S
+
+	return S_double_prime_residue
 
 if len(sys.argv) != 3:
 	'''
@@ -84,5 +142,5 @@ else:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
-	print simAnneal(our_list, max_iterations)
+	print simAnnealPP(our_list, max_iterations)
 
