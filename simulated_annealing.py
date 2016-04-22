@@ -7,6 +7,7 @@ import sys # to read in inputfile
 from math import exp, floor, e
 from random import choice, random, randint
 from decimal import Decimal, getcontext; getcontext().prec = 100
+from kk import run as runKK
 
 def residue(S, A):
 	sigma = 0
@@ -55,7 +56,17 @@ def simAnneal(our_list, max_iterations):
 	# returns the best sequence
 	return S_double_prime_residue
 
+def simAnnealPP(our_list, max_iterations):
+	P = partition(our_list)
 
+	for n in range(max_iterations):
+		P_neighbor = neighbor(P)
+		residue_P = runKK(P)
+		residue_P_neighbor = runKK(P_neighbor)
+		if residue_P < residue_P_neighbor:
+			P = P_neighbor
+		else:
+			#pigs_fly = exp(-1 * (residue(S_prime, our_list) - residue(S, our_list)) / T(iter))
 
 if len(sys.argv) != 3:
 	'''
