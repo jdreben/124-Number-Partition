@@ -115,7 +115,7 @@ plt.semilogy(hc_resultsPP, color='pink', label='HC')
 legend = plt.legend(loc='upper right', shadow=True, fontsize='large')
 # Put a nicer background color on the legend.
 # legend.get_frame().set_facecolor('#00FFCC')
-plt.title("normal plot, 2nd representation")
+plt.title("2nd representation")
 plt.xlabel("instance")
 plt.ylabel("log residue")
 
