@@ -15,7 +15,7 @@ from hill_climbing import runPP as hill_climbingPP
 from repeated_random import run as repeated_random
 from repeated_random import runPP as repeated_randomPP
 
-iterations = 250
+iterations = 25000
 kk_results, sa_results, rr_results, hc_results  = [], [], [], []
 sa_resultsPP, rr_resultsPP, hc_resultsPP  = [], [], []
 for loop in range(0, 50):
@@ -47,7 +47,6 @@ for loop in range(0, 50):
 	sa_resultPP = simulated_annealingPP(this_loop_list[:], iterations)
 	sa_resultsPP.append(sa_resultPP)
 	print "sa_resultPP " + str(sa_resultPP)
-	
 
 
 import matplotlib.pyplot as plt
