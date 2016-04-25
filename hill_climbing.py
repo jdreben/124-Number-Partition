@@ -118,4 +118,4 @@ else:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
-	print runPP(our_list, max_iterations)
+	print run(our_list, max_iterations)

@@ -163,5 +163,5 @@ else:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
-	print simAnnealPP(our_list, max_iterations)
+	print simAnneal(our_list, max_iterations)
 
