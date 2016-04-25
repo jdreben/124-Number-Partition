@@ -109,8 +109,8 @@ def getPartition(P, our_list):
 	# final method
 	list_size = len(list)
 	A = [0 for _ in range(list_size)]
-	for j in range(0, list_size-1):
-		A[P[j]] = list[P[j]] + list[j]
+	for j in range(list_size):
+		A[P[j]] = A[P[j]] + list[j]
 	list = A[:]
 
 	# old method

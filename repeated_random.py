@@ -63,11 +63,9 @@ def runPP(our_list, max_iterations):
 
 		# final method
 		A = [0 for _ in range(list_size)]
-		for j in range(0, list_size-1):
-			A[P[j]] = list[P[j]] + list[j]
-		print A
+		for j in range(list_size):
+			A[P[j]] = A[P[j]] + list[j]
 		list = A[:]
-		
 		# old method
 		# for p in range(list_size):
 		# 	for q in range(list_size - p):
