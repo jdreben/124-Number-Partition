@@ -65,6 +65,7 @@ def runPP(our_list, max_iterations):
 		A = [0 for _ in range(list_size)]
 		for j in range(0, list_size-1):
 			A[P[j]] = list[P[j]] + list[j]
+		print A
 		list = A[:]
 		
 		# old method
@@ -74,7 +75,7 @@ def runPP(our_list, max_iterations):
 		# 			list.append(list[p] + list[q])
 		# 			del list[p]
 		# 			del list[q]
-					# print len(list)
+		# 			print len(list)
 		# print "list getting KK'd is " + str(list)
 		new_residue = runKK(list)
 		residue = min(residue, new_residue)
