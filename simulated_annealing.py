@@ -4,7 +4,7 @@
 ## returns simulated annealing for input_file with smallest residue after max_iterations
 
 import sys # to read in inputfile
-from math import exp, floor, e
+from math import exp, floor, e, log
 from random import choice, random, randint
 # from repeated_random import prepartition as prepartition
 import heapq
@@ -38,7 +38,7 @@ def residue(S, A):
 	return abs(sigma)
 
 def T(iter):
-	return (10 ** 10) * (0.8 ** floor(iter / 300.0))
+	return log((10 ** 10) * (0.8 ** floor(iter / 300.0)))
 
 def simAnneal(our_list, max_iterations):
 	# print "got to simAnneal " + str(our_list)
@@ -133,7 +133,6 @@ def simAnnealPP(our_list, max_iterations):
 	for n in range(max_iterations):
 		S_prime = getNeighbor(S)
 		residue_S_prime = runKK(getPartition(S_prime, our_list))
-		
 		if residue_S > residue_S_prime:
 			S = S_prime[:]
 			residue_S = residue_S_prime
