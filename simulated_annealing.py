@@ -16,19 +16,6 @@ def prepartition(list_size):
 	return partition
 
 from kk import run as runKK
-# def runKK(l):
-# 	# expects minheap
-# 	l = [-1 * i for i in l]
-# 	heapq.heapify(l)
-
-# 	for i in range(len(l)):
-# 		if len(l) == 1 or len(l) == 0:
-# 			break
-# 		else:
-# 			x = heapq.heappop(l)
-# 			y = heapq.heappop(l)
-# 			heapq.heappush(l, x - y)
-# 	return -(heapq.heappop(l))
 
 def residue(S, A):
 	sigma = 0
