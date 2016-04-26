@@ -6,7 +6,8 @@ import sys # to read in inputfile
 import heapq
 
 def run(l):
-		# expects minheap
+		# Turn the default min heap into a max heap by
+		# multiplying all elements in l by -1
 		l = [-1 * i for i in l]
 		heapq.heapify(l)
 		for i in range(len(l)):
