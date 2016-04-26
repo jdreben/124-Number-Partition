@@ -59,7 +59,7 @@ def makeAPrime(list, P):
 
 if len(sys.argv) != 2:
 	'''
-	print "Usage: ./repeated_random.py path_to_input_file"
+	print "Usage: ./kk.py path_to_input_file"
 	sys.exit(0)
 	'''
 else:

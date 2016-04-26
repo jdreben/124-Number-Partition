@@ -40,41 +40,14 @@ def runPP(our_list, max_iterations):
 
 	for n in range(max_iterations):
 		P = prepartition(list_size)
-		# print "partition is " + str(P)
 		list = our_list[:]
-
-		# new method
-		# p = 0
-		# while p < len(list):
-		# 	q = p + 1
-		# 	while q < len(list):
-		# 		if P[p] == P[q]:
-		# 			# print "p is " + str(p)
-		# 			# print "q is " + str(q)
-		# 			# print "P[p] " + str(P[p])
-		# 			# print "P[q] " + str(P[q])
-		# 			# print "this fired"
-		# 			list[P[p] - 1] = list[p] + list[q]
-		# 			# del list[p]
-		# 			# del list[q-1]
-		# 			list[q] = 0
-		# 		q += 1
-		# 	p += 1
 
 		# final method
 		A = [0 for _ in range(list_size)]
 		for j in range(list_size):
 			A[P[j]] = A[P[j]] + list[j]
 		list = A[:]
-		# old method
-		# for p in range(list_size):
-		# 	for q in range(list_size - p):
-		# 		if p < min([len(list), len(P)]) and q < min([len(list), len(P)]) and P[p] == P[q]:
-		# 			list.append(list[p] + list[q])
-		# 			del list[p]
-		# 			del list[q]
-		# 			print len(list)
-		# print "list getting KK'd is " + str(list)
+
 		new_residue = runKK(list)
 		residue = min(residue, new_residue)
 
