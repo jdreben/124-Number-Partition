@@ -4,8 +4,10 @@
 ## returns random sequence for input_file with smallest residue after max_iterations
 import sys # to read in inputfile
 import heapq
+import time
 
 def run(l):
+                t0 = time.time()
 		# Turn the default min heap into a max heap by
 		# multiplying all elements in l by -1
 		l = [-1 * i for i in l]
@@ -18,9 +20,11 @@ def run(l):
 				y = heapq.heappop(l)
 				heapq.heappush(l, x - y)
 
-		return -(heapq.heappop(l))
+                t1 = time.time()
+		return (-(heapq.heappop(l)),t1-t0)
 
 def runPP(list, P):
+        t0 = time.time()
 	APrime = makeAPrime(list, P)
 	heapq.heapify(APrime)
 
@@ -31,8 +35,8 @@ def runPP(list, P):
 			x = heapq.heappop(APrime)
 			y = heapq.heappop(APrime)
 			heapq.heappush(APrime, x - y)
-
-	return -(heapq.heappop(APrime))
+        t1 = time.time()
+	return (-(heapq.heappop(APrime)),t1-t0)
 
 def makeP(input):
 	P = []
@@ -72,5 +76,5 @@ else:
 	       list.append(int(line)) # cast to int
 	       list_size += 1
 	P = makeP(list_size)
-	print "KK result " + str(run(list))
+	print "KK result " + str(run(list)[0])
 

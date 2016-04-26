@@ -3,7 +3,7 @@
 ## Usage: ./simulated_annealing.py path_to_input_file max_iterations
 ## returns simulated annealing for input_file with smallest residue after max_iterations
 
-import sys # to read in inputfile
+import sys, time # to read in inputfile / time algorithm
 from math import exp, floor, e, log
 from random import choice, random, randint
 # from repeated_random import prepartition as prepartition
@@ -28,7 +28,6 @@ from kk import run as runKK
 # 			x = heapq.heappop(l)
 # 			y = heapq.heappop(l)
 # 			heapq.heappush(l, x - y)
-
 # 	return -(heapq.heappop(l))
 
 def residue(S, A):
@@ -41,7 +40,8 @@ def T(iter):
 	return log((10 ** 10) * (0.8 ** floor(iter / 300.0)))
 
 def simAnneal(our_list, max_iterations):
-	# print "got to simAnneal " + str(our_list)
+        t0 = time.time()
+        # print "got to simAnneal " + str(our_list)
 	S = [choice([-1, 1]) for _ in range(0,len(our_list))]
 	S_residue = residue(S, our_list)
 
@@ -77,7 +77,8 @@ def simAnneal(our_list, max_iterations):
 			S_double_prime_residue = residue(S, our_list)
 
 	# returns the best sequence
-	return S_double_prime_residue
+        t1 = time.time()
+	return (S_double_prime_residue, t1 - t0)
 
 def getNeighbor(P):
 	length = len(P)
@@ -100,15 +101,16 @@ def getPartition(P, our_list):
 	return list
 
 def simAnnealPP(our_list, max_iterations):
+        t0 = time.time()
 	list_size = len(our_list)
 	S = prepartition(list_size)
-	residue_S = runKK(getPartition(S, our_list))
+	residue_S = runKK(getPartition(S, our_list))[0]
 	S_double_prime = S[:]
 	S_double_prime_residue = residue_S
 
 	for n in range(max_iterations):
 		S_prime = getNeighbor(S)
-		residue_S_prime = runKK(getPartition(S_prime, our_list))
+		residue_S_prime = runKK(getPartition(S_prime, our_list))[0]
 		if residue_S > residue_S_prime:
 			S = S_prime[:]
 			residue_S = residue_S_prime
@@ -119,8 +121,8 @@ def simAnnealPP(our_list, max_iterations):
 		if residue_S < S_double_prime_residue:
 			S_double_prime = S[:]
 			S_double_prime_residue = residue_S
-
-	return S_double_prime_residue
+        t1 = time.time()
+	return (S_double_prime_residue, t1 - t0)
 
 if len(sys.argv) != 3:
 	'''
@@ -138,5 +140,5 @@ else:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
-	print simAnneal(our_list, max_iterations)
+	print simAnneal(our_list, max_iterations)[0]
 

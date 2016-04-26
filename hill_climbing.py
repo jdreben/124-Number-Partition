@@ -2,7 +2,7 @@
 # boilerplate usage / reading in file
 ## Usage: ./hill_climbing.py path_to_input_file max_iterations
 ## returns hill climbing for input_file with smallest residue after max_iterations
-import sys # to read in inputfile
+import sys, time # to read in inputfile / time the algorithm
 from kk import run as runKK
 from random import randint
 from random import choice, random, randint
@@ -28,7 +28,8 @@ def getNeighbor(P):
 	return P
 
 def runPP(our_list, max_iterations):
-	list_size = len(our_list)
+        t0 = time.time()
+        list_size = len(our_list)
 	residue = sys.maxint
 	P = prepartition(list_size)
 	list = our_list[:]
@@ -45,11 +46,13 @@ def runPP(our_list, max_iterations):
 			A[P[j]] = A[P[j]] + list[j]
 		list = A[:]
 
-		new_residue = runKK(list)
+		new_residue = runKK(list)[0]
 		residue = min(residue, new_residue)
-	return residue
+        t1 = time.time()
+        return (residue, t1 - t0)
 
 def run(our_list, max_iterations):
+        t0 = time.time()
 	from random import choice, random, randint
 
 	best_sequence = [choice([-1, 1]) for _ in range(0,len(our_list))]
@@ -75,7 +78,8 @@ def run(our_list, max_iterations):
 			best_sequence = this_sequence
 			best_residue = this_residue
 	# returns the best sequence
-	return best_residue
+        t1 = time.time()
+	return (best_residue, t1 - t0)
 
 if len(sys.argv) != 3:
 	'''
@@ -92,4 +96,4 @@ else:
 	    for line in FileObj:
 	       our_list.append(int(line)) # cast to int
 	# end boilerplate, begin repeated_random
-	print run(our_list, max_iterations)
+	print run(our_list, max_iterations)[0]

@@ -4,7 +4,7 @@
 ## returns random sequence for input_file with smallest residue after max_iterations
 
 from kk import run as runKK
-import sys
+import sys, time
 from random import randint
 
 def residue(S, A):
@@ -14,7 +14,8 @@ def residue(S, A):
 	return abs(sigma)
 
 def run(our_list, max_iterations):
-	from random import choice # choosing between -1 and 1
+        t0 = time.time()
+       	from random import choice # choosing between -1 and 1
 	best_sequence = [choice([-1, 1]) for _ in range(0,len(our_list))]
 	best_residue = residue(best_sequence, our_list)
 	for i in range(max_iterations, 0, -1):
@@ -25,16 +26,18 @@ def run(our_list, max_iterations):
 			best_sequence = random_assignment
 			best_residue = this_residue
 	# returns the best sequence
-	return best_residue
+        t1 = time.time()
+        print "t1 - t0 is " + str(t1 - t0)
+	return (best_residue, t1 - t0)
 
 def prepartition(list_size):
-	
 	partition = []
 	for i in range(list_size):
 		partition.append(randint(0, list_size-1))
 	return partition
 
 def runPP(our_list, max_iterations):
+        t0 = time.time()
 	list_size = len(our_list)
 	residue = sys.maxint
 
@@ -48,10 +51,10 @@ def runPP(our_list, max_iterations):
 			A[P[j]] = A[P[j]] + list[j]
 		list = A[:]
 
-		new_residue = runKK(list)
+		new_residue = runKK(list)[0]
 		residue = min(residue, new_residue)
-
-	return residue
+        t1 = time.time()
+	return (residue, t1 - t0)
 
 if len(sys.argv) != 3:
 	"""
@@ -70,7 +73,7 @@ else:
 	# end boilerplate, begin repeated_random
 
 	#print run(our_list, int(sys.argv[2]))
-	print "Repeated Random Result " + str(run(our_list, max_iterations))
+	print "Repeated Random Result " + str(run(our_list, max_iterations)[0])
 
 
 
